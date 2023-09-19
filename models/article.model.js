@@ -65,4 +65,61 @@ Article.createNew = (newArticle, result) => {
     })
 }
 
+Article.showArticle = (articleId, result) => {
+    let articleQuery = `SELECT * FROM article WHERE id = "${articleId}"`
+    let authorQuery = `SELECT * FROM author`
+    let article
+    let authors = []
+
+    con.query(articleQuery, (err, res) => {
+        if (err) {
+            console.log('error: ', err)
+            result(err, null)
+            return
+        }
+        article = res
+        console.log('article: ', article)
+
+        con.query(authorQuery, (err, res) => {
+            if (err) {
+                console.log('error: ', err)
+                result(err, null)
+                return
+            }
+            authors = res
+            console.log('authors: ', authors)
+            result(null, article, authors)
+        })
+    })
+}
+
+Article.editArticle = (articleId, editedArticle, result) => {
+    let query = `UPDATE article SET name = "${editedArticle.name}", slug = "${editedArticle.slug}", image = "${editedArticle.image}", body = "${editedArticle.body}", author_id = "${editedArticle.author_id}" WHERE id = ${articleId}`
+
+    con.query(query, (err, res) => {
+        if (err) {
+            console.log('error: ', err)
+            result(err, null)
+            return
+        }
+        console.log('edited article: ', {id: res.insertId, ...editedArticle})
+        result(null, {id: res.insertId, ...editedArticle})
+    })
+}
+
+Article.deleteArticle = (articleId, result) => {
+    let query = `DELETE FROM article WHERE id = "${articleId}"`
+
+    con.query(query, (err, res) => {
+        if (err) {
+            console.log('error: ', err)
+            result(err, null)
+            return
+        }
+        console.log('deleted article: ', {id: res.insertId})
+        result(null, {id: res.insertId})
+    })
+}
+
+
 module.exports = Article;
