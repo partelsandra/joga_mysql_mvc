@@ -8,7 +8,7 @@ const Article = (article) => {
     this.image = article.image
     this.body = article.body
     this.published = article.published
-    this.autor_id = article.autor_id
+    this.author_id = article.author_id;
 }
 
 //get all articles
@@ -50,6 +50,19 @@ Article.getBySlug = (slug, result) => {
             result(null, res[0]);
         }
     });
+}
+
+Article.createNew = (newArticle, result) => {
+    let query = `INSERT INTO article (name, slug, image, body, published, author_id) VALUES ("${newArticle.name}", "${newArticle.slug}", "${newArticle.image}", "${newArticle.body}", "${newArticle.published}", ${newArticle.author_id})`
+    con.query(query, (err, res) => {
+        if (err) {
+            console.log('error: ', err)
+            result(err, null)
+            return
+        }
+        console.log('created article: ', {id: res.insertId, ...newArticle})
+        result(null, {id: res.insertId, ...newArticle})
+    })
 }
 
 module.exports = Article;
