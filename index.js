@@ -6,6 +6,17 @@ const path = require('path');
 // Add template engine
 const hbs = require('express-handlebars');
 
+//Kontrolleri täiendamine mudeliga
+const app = express()
+app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.json());
+
+const articleControllerClass = require('./controllers/article');
+const articleController = new articleControllerClass()
+
+const articleRoutes = require('./routes/article');
+app.use('/', articleRoutes);
+
 // Setup template engine directory and file extensions
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

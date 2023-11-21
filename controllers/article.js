@@ -1,4 +1,20 @@
 const Article = require('../models/article.model.js')
+//Kontrolleri täiendamine mudeliga lisad
+const articleDbModel = require('../models/article')
+const articleModel = new articleModel();
+
+//Kontrolleri täiendamine mudeliga
+class articleController {
+    constructor() {
+        const articles = []
+    }
+
+    async getAllArticles(req,res) {
+        const articles = await articleModel.findAll()
+        res.status(201).json({articles: articles})
+    }
+}
+
 
 // show all articles - index page
 const getAllArticles = (req,res) => {
@@ -109,5 +125,6 @@ module.exports = {
     createNewArticle,
     showNewArticleForm,
     editArticle,
-    updateArticle
+    updateArticle,
+    articleController
 };
