@@ -1,6 +1,6 @@
 // import database connection
 const Author = require('../models/author.model')
-const authorDbModel = require('../models/author')
+const authorDbModel = require('../models/auhtor')
 const articleDbModel = require('../models/article')
 
 const authorModel = new authorDbModel();
