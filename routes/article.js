@@ -15,6 +15,7 @@ router.get('/article/create', articleController.showNewArticleForm);
 router.post('/create', articleController.createNewArticle);
 router.get('/edit/:id', articleController.editArticle);
 router.post('/edit/:id', articleController.updateArticle);
+router.post('/article/create', (req, res) => articleController.createNewArticle(req, res));
 router.get('/', (req, res) => articleController.getAllArticles(req, res));
 router.get('/article/:slug', (req, res) => articleController.getArticleBySlug(req, res));
 //export article router for using in default application file
